@@ -71,29 +71,30 @@ def dump_to_file(filename, data):
 
 
 def main():
-    if len(sys.argv < 3):
+    if len(sys.argv) < 3:
         print "Hey, give your username and password as arguments"
 
     last_boarder_retrieved = 1
     output_file = 'boarders.json'
     boarder_list = []
-    if len(sys.argv == 4):
+    if len(sys.argv) == 4:
         output_file = sys.argv[4]
         with open(output_file) as boarder_file:
             boarder_list = json.load(boarder_file)
             last_board_retrieved = len(boarder_json) - 1
 
-
     browser = get_hipinion(sys.argv[1], sys.argv[2])
-    print br.title()
-    print br.geturl()
+
     while last_boarder_retrieved < NUMBER_OF_BOARDERS:
-        boarder_info = parse_boarder_profile(
-            get_boarder_profile(browser, last_boarder_retrieved))
-        print boarder_info
-        boarder_list.append(boarder_info)
-        with open(output_file, 'w') as fh:
-            fh.write(json.dump(boarder_list))
+        try:
+            boarder_info = parse_boarder_profile(
+                get_boarder_profile(browser, last_boarder_retrieved))
+            print boarder_info
+            boarder_list.append(boarder_info)
+            with open(output_file, 'w') as fh:
+                fh.write(json.dump(boarder_list))
+        except:
+            pass
         last_boarder_retrieved += 1
         time.sleep(3)
 
