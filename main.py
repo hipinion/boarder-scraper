@@ -92,7 +92,7 @@ def main():
             print boarder_info
             boarder_list.append(boarder_info)
             with open(output_file, 'w') as fh:
-                fh.write(json.dump(boarder_list))
+                json.dump(boarder_list, fh)
         except:
             pass
         last_boarder_retrieved += 1
